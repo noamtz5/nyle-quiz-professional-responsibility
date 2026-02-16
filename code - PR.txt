@@ -1,0 +1,310 @@
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    padding: 20px;
+}
+
+.quiz-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.quiz-main {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.quiz-header h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.question-text {
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option-item {
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px;
+    background: #f9f9f9;
+}
+
+.option-item:hover {
+    border-color: #667eea;
+    background: #f0f4ff;
+}
+
+.option-item.correct {
+    border-color: #10b981;
+    background: #ecfdf5;
+}
+
+.option-item.incorrect {
+    border-color: #ef4444;
+    background: #fef2f2;
+}
+
+.feedback {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 6px;
+    display: none;
+}
+
+.feedback.show {
+    display: block;
+}
+
+.feedback.correct {
+    background: #ecfdf5;
+    border-left: 4px solid #10b981;
+    color: #065f46;
+}
+
+.feedback.incorrect {
+    background: #fef2f2;
+    border-left: 4px solid #ef4444;
+    color: #7f1d1d;
+}
+
+.button-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-next {
+    background: #667eea;
+    color: white;
+    flex: 1;
+}
+
+.btn-next:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-skip {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.results-view {
+    display: none;
+    text-align: center;
+}
+
+.results-view.show {
+    display: block;
+}
+
+.results-score {
+    font-size: 42px;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 12px;
+}
+
+.results-message {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 24px;
+}
+
+.results-table {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.btn-restart {
+    background: #667eea;
+    color: white;
+}
+</style>
+
+<div class="quiz-wrapper">
+    <div class="quiz-main">
+        <div class="quiz-header">
+            <h2>NYLE Professional Responsibility</h2>
+            <p>Practice Questions & Answers</p>
+        </div>
+
+        <div id="quizView">
+            <div class="question-section" id="questionContent"></div>
+            <div class="button-controls">
+                <button class="btn-skip" onclick="skipQuestion()">Skip</button>
+                <button class="btn-next" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <div id="resultsView" class="results-view">
+            <div class="results-score" id="finalScore">0/19</div>
+            <div class="results-message" id="resultMsg">Great job!</div>
+            <div class="results-table">
+                <div class="result-row">
+                    <span>Correct</span>
+                    <span id="corrCount">0</span>
+                </div>
+                <div class="result-row">
+                    <span>Incorrect</span>
+                    <span id="incorrCount">0</span>
+                </div>
+                <div class="result-row">
+                    <span>Accuracy</span>
+                    <span id="accRate">0%</span>
+                </div>
+            </div>
+            <button class="btn-restart" onclick="location.reload()">Restart Quiz</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    {question: "Under RPC Rule 1.1, a lawyer must provide representation that is:", options: ["Zealous regardless of competence", "Competent and not knowingly beyond the lawyer's ability", "Guaranteed to succeed", "Limited to written advice"], correct: 1, explanation: "Rule 1.1 requires competent representation and prohibits handling matters the lawyer knows or should know exceed their competence without adequate preparation."},
+    {question: "Under RPC Rule 1.2, allocation of authority between lawyer and client provides that:", options: ["The lawyer controls all objectives", "The client decides strategy exclusively", "The lawyer determines objectives and means without consultation", "The lawyer must abide by client decisions concerning objectives and consult about means"], correct: 3, explanation: "Rule 1.2 requires lawyers to abide by client decisions regarding objectives while exercising professional judgment regarding means."},
+    {question: "Under RPC Rule 1.4, a lawyer's duty of communication includes:", options: ["Informing the client of material developments", "Deciding not to respond to client inquiries", "Withholding information to avoid confusion", "Communicating only upon request"], correct: 0, explanation: "Rule 1.4 requires prompt communication of material developments and compliance with reasonable client requests."},
+    {question: "A lawyer may withdraw from representation under RPC Rule 1.16 when:", options: ["The client insists on presenting a frivolous claim", "The lawyer is busy", "Fees are modest", "The client disagrees with advice"], correct: 0, explanation: "Rule 1.16 permits withdrawal when a client insists on pursuing claims not warranted under existing law."},
+    {question: "Under RPC Rule 1.6, confidential information may be disclosed:", options: ["To advance the lawyer's personal interest", "When authorized or permitted by Rule 1.6(b) exceptions", "Whenever it benefits a third party", "If requested by a friend"], correct: 1, explanation: "Confidential information may be revealed only where permitted by client consent or specific Rule 1.6(b) exceptions."},
+    {question: "A concurrent conflict of interest under RPC 1.7 exists when:", options: ["A lawyer represents opposing parties in unrelated matters", "There is a significant risk professional judgment will be adversely affected", "The client waives fees", "A former client is involved"], correct: 1, explanation: "A concurrent conflict includes situations where professional judgment may be adversely affected by competing interests."},
+    {question: "Under RPC 1.8, sexual relations with a client are:", options: ["Always permitted", "Permitted only after representation ends", "Prohibited if initiated during representation unless preexisting", "Encouraged in domestic matters"], correct: 2, explanation: "Rule 1.8 prohibits sexual relations with a client during representation unless a prior consensual relationship existed."},
+    {question: "Under RPC 1.10, conflicts are imputed to:", options: ["Opposing counsel", "All lawyers in the firm, subject to limited exceptions", "Clients only", "Judges"], correct: 1, explanation: "Rule 1.10 imputes conflicts to all lawyers in a firm, with limited screening exceptions."},
+    {question: "Under 22 NYCRR 1215, a written letter of engagement is required when:", options: ["Any legal services are provided", "The fee exceeds $3,000, subject to exceptions", "Only in criminal cases", "Only if the client requests it"], correct: 1, explanation: "Written engagement letters are required in most matters exceeding $3,000 unless specific exceptions apply."},
+    {question: "A lawyer may not charge:", options: ["A reasonable fee", "A contingent fee in a personal injury case", "An excessive fee under RPC 1.5", "A flat fee"], correct: 2, explanation: "RPC 1.5 prohibits excessive or illegal fees based on reasonableness factors."},
+    {question: "Funds belonging to a client must:", options: ["Be deposited in the lawyer's personal account", "Be kept in a special account separate from the lawyer's funds", "Be invested in the stock market", "Be used temporarily for office expenses"], correct: 1, explanation: "Rule 1.15 requires segregation of client funds in a special account and prohibits commingling."},
+    {question: "Lawyer advertising under RPC 7.1 must be:", options: ["Misleading but creative", "Anonymous", "Truthful and not deceptive", "Approved by a judge"], correct: 2, explanation: "Advertising must be truthful and not misleading under Rule 7.1."},
+    {question: "Under RPC 3.1, a lawyer may not:", options: ["File a claim unwarranted by existing law without good faith basis", "Defend a criminal case", "Make novel legal arguments", "Advocate zealously"], correct: 0, explanation: "Rule 3.1 prohibits asserting frivolous claims without a good faith argument for extension or modification of law."},
+    {question: "Attorney registration under Judiciary Law § 468-a requires:", options: ["Annual payment", "Biennial registration and fee", "One-time registration", "Registration only if practicing"], correct: 1, explanation: "Attorneys must register biennially and pay the statutory fee unless exempt."},
+    {question: "CLE requirements under 22 NYCRR Part 150 require experienced attorneys to complete:", options: ["24 credits every two years including ethics", "10 credits annually", "50 credits per year", "No CLE"], correct: 0, explanation: "Experienced attorneys must complete 24 CLE credits biennially including ethics and diversity requirements."},
+    {question: "An attorney represents two clients in the same litigation whose interests later diverge. The attorney continues representation without written consent. This is:", options: ["Proper if the lawyer believes both will win", "A concurrent conflict requiring informed written consent", "Permitted if fees are reduced", "Allowed if no objection is raised"], correct: 1, explanation: "RPC 1.7 requires informed written consent when concurrent conflicts exist."},
+    {question: "A lawyer deposits a client settlement check into the firm operating account, intending to transfer it later. This conduct:", options: ["Is permitted temporarily", "Violates Rule 1.15's prohibition on commingling", "Is allowed if the client agrees", "Is required practice"], correct: 1, explanation: "Client funds must be deposited in a special account and may not be commingled with firm funds."},
+    {question: "A lawyer advertises as a \"specialist\" in criminal law without certification. This is:", options: ["Proper if experienced", "Allowed if no complaint", "Prohibited unless certified and proper disclosure given", "Encouraged"], correct: 2, explanation: "RPC 7.4 permits specialist claims only with proper certification disclosure."},
+    {question: "A lawyer represents a corporation. An officer intends to commit fraud harming investors. The lawyer learns of this and considers remaining silent. Under the RPC, the lawyer must:", options: ["Do nothing because of confidentiality", "Withdraw immediately without advising anyone", "Report to the government automatically", "Take reasonable steps in the best interests of the organization, which may include reporting up the ladder"], correct: 3, explanation: "RPC 1.13 requires lawyers representing organizations to act in the best interests of the entity, including reporting misconduct up the organizational hierarchy."}
+];
+
+let currentQuestion = 0;
+let answers = JSON.parse(localStorage.getItem('nyleQuizAnswers')) || new Array(quizData.length).fill(null);
+
+function renderQuestion() {
+    const q = quizData[currentQuestion];
+    const isAnswered = answers[currentQuestion] !== null;
+
+    let html = `<div><strong>Question ${currentQuestion + 1} of ${quizData.length}</strong></div>
+        <div class="question-text">${q.question}</div>
+        <div class="options-list">`;
+
+    q.options.forEach((opt, idx) => {
+        const isCorrect = idx === q.correct;
+        const isSelected = answers[currentQuestion] === idx;
+        const showFeedback = isAnswered;
+
+        let className = 'option-item';
+        if (showFeedback) {
+            className += isCorrect ? ' correct' : (isSelected ? ' incorrect' : '');
+        }
+
+        html += `<label class="${className}"><input type="radio" name="opt" value="${idx}" ${isSelected ? 'checked' : ''} onchange="selectAnswer(${idx})" ${showFeedback ? 'disabled' : ''}> ${String.fromCharCode(65 + idx)}. ${opt}</label>`;
+    });
+
+    html += `</div>`;
+
+    if (isAnswered) {
+        const isCorrect = answers[currentQuestion] === q.correct;
+        html += `<div class="feedback ${isCorrect ? 'correct' : 'incorrect'} show"><strong>${isCorrect ? '✓ Correct!' : '✗ Incorrect'}</strong><br>${q.explanation}</div>`;
+    }
+
+    document.getElementById('questionContent').innerHTML = html;
+    document.getElementById('nextBtn').disabled = !isAnswered;
+}
+
+function selectAnswer(idx) {
+    answers[currentQuestion] = idx;
+    localStorage.setItem('nyleQuizAnswers', JSON.stringify(answers));
+    renderQuestion();
+}
+
+function nextQuestion() {
+    if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function skipQuestion() {
+    if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+    }
+}
+
+function showResults() {
+    const correct = answers.filter((a, i) => a === quizData[i].correct).length;
+    const pct = Math.round((correct / quizData.length) * 100);
+
+    document.getElementById('quizView').style.display = 'none';
+    document.getElementById('resultsView').classList.add('show');
+
+    document.getElementById('finalScore').textContent = `${correct}/19`;
+    document.getElementById('corrCount').textContent = correct;
+    document.getElementById('incorrCount').textContent = (19 - correct);
+    document.getElementById('accRate').textContent = pct + '%';
+
+    const messages = {
+        80: 'Excellent work! You\'re well-prepared for the NYLE exam!',
+        70: 'Good job! Review the topics you missed for better results.',
+        60: 'Keep studying! Focus on the areas where you struggled.',
+        0: 'Review all topics and take the quiz again.'
+    };
+
+    let message = messages[0];
+    if (pct >= 80) message = messages[80];
+    else if (pct >= 70) message = messages[70];
+    else if (pct >= 60) message = messages[60];
+
+    document.getElementById('resultMsg').textContent = message;
+    localStorage.removeItem('nyleQuizAnswers');
+}
+
+renderQuestion();
+</script>
