@@ -96,20 +96,20 @@ a { color: var(--ink); text-decoration: none; }
   height: 72px;
   gap: 20px;
 }
-.brand { display: flex; align-items: baseline; gap: 8px; }
+.brand { display: flex; flex-direction: column; align-items: flex-start; line-height: 1; gap: 3px; }
 .brand-nyle {
   font-family: 'Fraunces', serif;
   font-weight: 900;
-  font-size: 25px;
+  font-size: 22px;
   letter-spacing: -0.5px;
   color: var(--ink);
 }
 .brand-prep-wrap { position: relative; display: inline-block; }
-.brand-highlight { position: absolute; left: -4px; bottom: 1px; z-index: 1; }
+.brand-highlight { position: absolute; left: -4px; bottom: 0; z-index: 1; }
 .brand-prep {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 18px;
   color: var(--ink);
   position: relative;
   z-index: 2;
