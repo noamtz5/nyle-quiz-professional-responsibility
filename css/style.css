@@ -270,6 +270,18 @@ a { color: var(--ink); text-decoration: none; }
 
 /* ---------- Footer ---------- */
 .site-footer { background: var(--ink); color: #B5B2C4; padding: 40px 0; text-align: center; }
+.footer-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: #B5B2C4;
+  border: 1px solid rgba(255,255,255,0.18);
+  margin-bottom: 14px;
+}
+.footer-social:hover { color: var(--amber); border-color: var(--amber); }
 .footer-disclaimer {
   font-size: 12px;
   color: #7C7891;

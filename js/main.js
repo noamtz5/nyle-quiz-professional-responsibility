@@ -16,14 +16,6 @@ const contactForm = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
 
 contactForm.addEventListener('submit', async (e) => {
-  if (contactForm.action.includes('YOUR_FORM_ID')) {
-    e.preventDefault();
-    formStatus.hidden = false;
-    formStatus.className = 'form-status error';
-    formStatus.textContent = 'Contact form is not connected yet. Please email contact@nylepreplab.com directly.';
-    return;
-  }
-
   e.preventDefault();
   formStatus.hidden = false;
   formStatus.className = 'form-status';
@@ -45,6 +37,6 @@ contactForm.addEventListener('submit', async (e) => {
     }
   } catch (err) {
     formStatus.className = 'form-status error';
-    formStatus.textContent = 'Something went wrong. Please email contact@nylepreplab.com directly.';
+    formStatus.textContent = 'Something went wrong. Please try again in a moment.';
   }
 });
