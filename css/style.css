@@ -105,7 +105,7 @@ a { color: var(--ink); text-decoration: none; }
   color: var(--ink);
 }
 .brand-prep-wrap { position: relative; display: inline-block; }
-.brand-highlight { position: absolute; left: -4px; bottom: 0; z-index: 1; }
+.brand-highlight { position: absolute; left: -4px; bottom: -6px; z-index: 1; }
 .brand-prep {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
