@@ -142,26 +142,9 @@ a { color: var(--ink); text-decoration: none; }
 }
 .hero-sub {
   max-width: 620px;
-  margin: 0 auto 34px;
+  margin: 0 auto;
   color: var(--ink-soft);
   font-size: 18px;
-}
-.hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-.hero-stats {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 36px;
-}
-.stat-chip {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--ink-soft);
-  background: var(--cream-deep);
-  border: 1px solid var(--border);
-  padding: 8px 16px;
-  border-radius: 999px;
 }
 
 /* ---------- Sections ---------- */
