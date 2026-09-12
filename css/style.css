@@ -121,7 +121,6 @@ a { color: var(--ink); text-decoration: none; }
 }
 .main-nav a { font-weight: 500; color: var(--ink-soft); }
 .main-nav a:hover { color: var(--ink); }
-.nav-cta { margin-left: 16px; white-space: nowrap; }
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -306,7 +305,6 @@ a { color: var(--ink); text-decoration: none; }
   }
   .main-nav.open { display: flex; }
   .nav-toggle { display: flex; }
-  .nav-cta { display: none; }
   .hero { padding: 18px 0 30px; }
   .hero h1 { font-size: 27px; margin-bottom: 10px; }
   .hero-sub { font-size: 14px; line-height: 1.4; }
