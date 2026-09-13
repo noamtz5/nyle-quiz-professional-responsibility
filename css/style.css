@@ -240,6 +240,8 @@ a { color: var(--ink); text-decoration: none; }
   font-weight: 700;
 }
 .pricing-note { text-align: center; color: #9C98AE; font-size: 12px; margin-top: 12px; }
+.pricing-preview-link { display: block; text-align: center; color: #C9C6DB; font-size: 13px; margin-top: 14px; text-decoration: underline; }
+.pricing-preview-link:hover { color: var(--amber); }
 
 /* ---------- Contact ---------- */
 .contact-inner {
