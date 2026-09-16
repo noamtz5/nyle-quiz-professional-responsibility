@@ -133,7 +133,14 @@ a { color: var(--ink); text-decoration: none; }
 .nav-toggle span { width: 24px; height: 2px; background: var(--ink); display: block; }
 
 /* ---------- Hero ---------- */
-.hero { padding: 18px 0 56px; position: relative; overflow: hidden; }
+.hero {
+  min-height: calc(100vh - 72px);
+  display: flex;
+  align-items: center;
+  padding: 32px 0;
+  position: relative;
+  overflow: hidden;
+}
 .hero::before {
   content: "";
   position: absolute;
@@ -145,11 +152,14 @@ a { color: var(--ink); text-decoration: none; }
   background: radial-gradient(circle, rgba(245,230,53,0.35) 0%, rgba(245,230,53,0) 70%);
   pointer-events: none;
 }
+.hero > .container {
+  width: 100%;
+}
 .hero-grid {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: 56px;
-  align-items: start;
+  align-items: center;
   position: relative;
 }
 .hero h1 {
