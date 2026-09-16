@@ -133,7 +133,7 @@ a { color: var(--ink); text-decoration: none; }
 .nav-toggle span { width: 24px; height: 2px; background: var(--ink); display: block; }
 
 /* ---------- Hero ---------- */
-.hero { padding: 40px 0 48px; position: relative; overflow: hidden; }
+.hero { padding: 18px 0 56px; position: relative; overflow: hidden; }
 .hero::before {
   content: "";
   position: absolute;
