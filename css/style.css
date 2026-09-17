@@ -183,32 +183,62 @@ a { color: var(--ink); text-decoration: none; }
   margin-bottom: 42px;
 }
 
-/* ---------- NYLE Explained ---------- */
-.explain-grid {
+/* ---------- NYLE Explained: sticky notes ---------- */
+.sticky-notes-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-bottom: 8px;
 }
-.explain-card {
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px;
-}
-.explain-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: var(--cream-deep);
-  border: 1px solid var(--border);
+.sticky-note {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--ink);
-  margin-bottom: 16px;
+  text-align: center;
+  min-height: 200px;
+  padding: 30px 22px;
+  border-radius: 4px 4px 10px 10px;
+  background-color: #FFF3B8;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 27px,
+    rgba(20, 21, 34, 0.1) 27px,
+    rgba(20, 21, 34, 0.1) 28px
+  );
+  box-shadow: 0 10px 22px rgba(20, 21, 34, 0.16);
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-.explain-icon svg { width: 22px; height: 22px; }
-.explain-card p { color: var(--ink-soft); }
+.sticky-note::before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--amber-deep);
+  box-shadow: 0 2px 4px rgba(20, 21, 34, 0.3);
+}
+.sticky-note:nth-child(1) { transform: rotate(-2deg); }
+.sticky-note:nth-child(2) { transform: rotate(1.4deg); }
+.sticky-note:nth-child(3) { transform: rotate(-1.2deg); }
+.sticky-note:nth-child(4) { transform: rotate(2deg); }
+.sticky-note:hover {
+  transform: translateY(-4px) rotate(0deg);
+  box-shadow: 0 16px 30px rgba(20, 21, 34, 0.22);
+}
+.sticky-note-text {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.35;
+  color: var(--ink);
+  position: relative;
+  z-index: 2;
+}
 .explain-disclaimer {
   margin-top: 34px;
   font-size: 13px;
@@ -324,9 +354,13 @@ a { color: var(--ink); text-decoration: none; }
 }
 
 @media (max-width: 800px) {
-  .explain-grid { grid-template-columns: 1fr; }
+  .sticky-notes-grid { grid-template-columns: repeat(2, 1fr); }
   .contact-inner { grid-template-columns: 1fr; }
   .hero h1 { font-size: 38px; }
+}
+
+@media (max-width: 480px) {
+  .sticky-notes-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 680px) {
@@ -354,4 +388,75 @@ a { color: var(--ink); text-decoration: none; }
   .price-amount { font-size: 34px; }
   .pricing-features { margin-bottom: 20px; }
   .pricing-features li { padding: 9px 0 9px 26px; font-size: 14px; }
+}
+
+/* ---------- Article pages ---------- */
+.article-back {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin-bottom: 20px;
+}
+.article-back:hover { color: var(--ink); }
+.article-shell { max-width: 720px; margin: 0 auto; }
+.article-shell h1 {
+  font-size: 38px;
+  margin-bottom: 18px;
+}
+.article-lead {
+  font-size: 18px;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.article-shell h2 {
+  font-size: 25px;
+  margin-top: 42px;
+  margin-bottom: 14px;
+}
+.article-shell h3 {
+  font-size: 19px;
+  margin-top: 28px;
+  margin-bottom: 10px;
+}
+.article-shell p {
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+.article-shell ul,
+.article-shell ol {
+  margin: 0 0 20px;
+  padding-left: 22px;
+  line-height: 1.7;
+}
+.article-shell li { margin-bottom: 8px; }
+.article-shell strong { color: var(--ink); }
+.article-checklist {
+  background: var(--cream-deep);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin: 24px 0 32px;
+  list-style: none;
+}
+.article-checklist li { padding-left: 0; }
+.article-cta {
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: var(--radius);
+  padding: 32px;
+  text-align: center;
+  margin: 48px 0 8px;
+}
+.article-cta p {
+  color: var(--cream);
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 680px) {
+  .article-shell h1 { font-size: 30px; }
+  .article-shell h2 { font-size: 21px; }
 }
