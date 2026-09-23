@@ -185,8 +185,9 @@ a { color: var(--ink); text-decoration: none; }
 
 /* ---------- NYLE Explained: sticky notes ---------- */
 .sticky-notes-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 30px;
   margin-bottom: 8px;
 }
@@ -195,6 +196,8 @@ a { color: var(--ink); text-decoration: none; }
   align-items: center;
   justify-content: center;
   text-align: center;
+  flex: 0 1 340px;
+  max-width: 340px;
   min-height: 200px;
   padding: 30px 22px;
   border-radius: 4px 4px 10px 10px;
@@ -355,13 +358,13 @@ a { color: var(--ink); text-decoration: none; }
 }
 
 @media (max-width: 800px) {
-  .sticky-notes-grid { grid-template-columns: repeat(2, 1fr); }
+  .sticky-note { flex-basis: 300px; max-width: 300px; }
   .contact-inner { grid-template-columns: 1fr; }
   .hero h1 { font-size: 38px; }
 }
 
 @media (max-width: 480px) {
-  .sticky-notes-grid { grid-template-columns: 1fr; }
+  .sticky-note { flex-basis: 100%; max-width: 100%; }
 }
 
 @media (max-width: 680px) {
