@@ -185,8 +185,9 @@ a { color: var(--ink); text-decoration: none; }
 
 /* ---------- NYLE Explained: sticky notes ---------- */
 .sticky-notes-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 30px;
   margin-bottom: 8px;
 }
@@ -195,6 +196,8 @@ a { color: var(--ink); text-decoration: none; }
   align-items: center;
   justify-content: center;
   text-align: center;
+  flex: 0 1 340px;
+  max-width: 340px;
   min-height: 200px;
   padding: 30px 22px;
   border-radius: 4px 4px 10px 10px;
@@ -226,6 +229,7 @@ a { color: var(--ink); text-decoration: none; }
 .sticky-note:nth-child(2) { transform: rotate(1.4deg); }
 .sticky-note:nth-child(3) { transform: rotate(-1.2deg); }
 .sticky-note:nth-child(4) { transform: rotate(2deg); }
+.sticky-note:nth-child(5) { transform: rotate(-1.6deg); }
 .sticky-note:hover {
   transform: translateY(-4px) rotate(0deg);
   box-shadow: 0 16px 30px rgba(20, 21, 34, 0.22);
@@ -354,13 +358,13 @@ a { color: var(--ink); text-decoration: none; }
 }
 
 @media (max-width: 800px) {
-  .sticky-notes-grid { grid-template-columns: repeat(2, 1fr); }
+  .sticky-note { flex-basis: 300px; max-width: 300px; }
   .contact-inner { grid-template-columns: 1fr; }
   .hero h1 { font-size: 38px; }
 }
 
 @media (max-width: 480px) {
-  .sticky-notes-grid { grid-template-columns: 1fr; }
+  .sticky-note { flex-basis: 100%; max-width: 100%; }
 }
 
 @media (max-width: 680px) {
@@ -440,6 +444,28 @@ a { color: var(--ink); text-decoration: none; }
   list-style: none;
 }
 .article-checklist li { padding-left: 0; }
+.article-table-wrap {
+  overflow-x: auto;
+  margin: 0 0 24px;
+}
+.article-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.article-table th,
+.article-table td {
+  text-align: left;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.article-table th {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--cream-deep);
+}
+.article-table td { color: var(--ink-soft); }
 .article-cta {
   background: var(--ink);
   color: var(--cream);
