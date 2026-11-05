@@ -42,3 +42,38 @@ if (contactForm) {
     }
   });
 }
+
+const quizSlides = document.querySelectorAll('.quiz-slide');
+
+quizSlides.forEach(slide => {
+  const choicesList = slide.querySelector('.quiz-choices-list');
+  const choices = slide.querySelectorAll('.quiz-choice');
+
+  choices.forEach(choice => {
+    choice.addEventListener('click', () => {
+      if (choicesList.classList.contains('answered')) return;
+      choicesList.classList.add('answered');
+      slide.classList.add('answered');
+
+      if (choice.getAttribute('data-correct') !== 'true') {
+        choice.classList.add('is-incorrect');
+      }
+      choices.forEach(c => {
+        if (c.getAttribute('data-correct') === 'true') {
+          c.classList.add('is-correct');
+        }
+      });
+    });
+  });
+
+  const nextBtn = slide.querySelector('.quiz-next-btn[data-next]');
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      const nextSlide = document.querySelector(`.quiz-slide[data-slide="${nextBtn.getAttribute('data-next')}"]`);
+      if (nextSlide) {
+        slide.classList.remove('active');
+        nextSlide.classList.add('active');
+      }
+    });
+  }
+});
