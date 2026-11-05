@@ -327,23 +327,32 @@ a { color: var(--ink); text-decoration: none; }
 .form-status.error { background: #FBEAEA; color: #7A2626; }
 
 /* ---------- Footer ---------- */
-.site-footer { background: var(--ink); color: #B5B2C4; padding: 40px 0; text-align: center; }
+.site-footer { background: var(--ink); color: #B5B2C4; padding: 24px 0; text-align: center; }
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 10px;
+}
+.footer-nav a { color: #B5B2C4; font-size: 13px; font-weight: 500; }
+.footer-nav a:hover { color: var(--amber); }
 .footer-social {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   color: #B5B2C4;
   border: 1px solid rgba(255,255,255,0.18);
-  margin-bottom: 14px;
+  margin-bottom: 8px;
 }
 .footer-social:hover { color: var(--amber); border-color: var(--amber); }
 .footer-disclaimer {
   font-size: 12px;
+  line-height: 1.4;
   color: #7C7891;
-  margin-top: 10px;
+  margin-top: 6px;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
